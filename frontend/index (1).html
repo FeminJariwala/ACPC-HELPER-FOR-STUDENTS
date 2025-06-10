@@ -52,32 +52,32 @@
 
       const params = new URLSearchParams({ year, round, category, institute });
 
-      // 🔁 CHANGE THIS TO YOUR Render API URL once deployed
       const apiUrl = "https://acpc-api.onrender.com/api/colleges?" + params.toString();
 
+      try {
+        const res = await fetch(apiUrl);
+        const data = await res.json();
 
+        const results = document.getElementById('results');
+        results.innerHTML = "";
 
-
-      const res = await fetch(apiUrl);
-      const data = await res.json();
-
-      const results = document.getElementById('results');
-      results.innerHTML = "";
-
-      data.forEach(row => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td class="p-2">${row.year}</td>
-          <td class="p-2">${row.round}</td>
-          <td class="p-2">${row.institute}</td>
-          <td class="p-2">${row.course}</td>
-          <td class="p-2">${row.category}</td>
-          <td class="p-2">${row.type}</td>
-          <td class="p-2">${row.first_rank}</td>
-          <td class="p-2">${row.last_rank}</td>
-        `;
-        results.appendChild(tr);
-      });
+        data.forEach(row => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td class="p-2">${row.year}</td>
+            <td class="p-2">${row.round}</td>
+            <td class="p-2">${row.institute}</td>
+            <td class="p-2">${row.course}</td>
+            <td class="p-2">${row.category}</td>
+            <td class="p-2">${row.type}</td>
+            <td class="p-2">${row.first_rank}</td>
+            <td class="p-2">${row.last_rank}</td>
+          `;
+          results.appendChild(tr);
+        });
+      } catch (error) {
+        alert("Failed to fetch data. Please check your internet or try again later.");
+      }
     }
   </script>
 </body>
