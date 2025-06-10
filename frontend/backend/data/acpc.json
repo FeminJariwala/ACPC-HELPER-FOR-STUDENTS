@@ -1,0 +1,24 @@
+[
+  {
+    "year": "2024",
+    "round": "3",
+    "institute": "A.D.PATEL INSTITUTE OF TECH.,KARAMSAD",
+    "course": "COMPUTER ENGINEERING",
+    "category": "GEN",
+    "merit_type": "GUJCET",
+    "institute_type": "Self-Finance",
+    "first_rank": 2986,
+    "last_rank": 4683
+  },
+  {
+    "year": "2025",
+    "round": "Mock",
+    "institute": "L.D.COLLEGE OF ENGINEERING, AHMEDABAD",
+    "course": "COMPUTER ENGINEERING",
+    "category": "GEN",
+    "merit_type": "GUJCET",
+    "institute_type": "Govt/GIA",
+    "first_rank": 30,
+    "last_rank": 597
+  }
+]
