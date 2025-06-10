@@ -45,13 +45,12 @@
 
   <script>
     async function fetchData() {
-      const year = document.getElementById('year').value;
-      const round = document.getElementById('round').value;
-      const category = document.getElementById('category').value;
-      const institute = document.getElementById('institute').value;
+      const year = document.getElementById('year').value.trim();
+      const round = document.getElementById('round').value.trim();
+      const category = document.getElementById('category').value.trim();
+      const institute = document.getElementById('institute').value.trim();
 
       const params = new URLSearchParams({ year, round, category, institute });
-
       const apiUrl = "https://acpc-api.onrender.com/api/colleges?" + params.toString();
 
       try {
@@ -60,6 +59,11 @@
 
         const results = document.getElementById('results');
         results.innerHTML = "";
+
+        if (!data.length) {
+          results.innerHTML = "<tr><td colspan='8' class='p-4 text-center text-red-500'>No data found. Try different filters.</td></tr>";
+          return;
+        }
 
         data.forEach(row => {
           const tr = document.createElement('tr');
@@ -76,7 +80,7 @@
           results.appendChild(tr);
         });
       } catch (error) {
-        alert("Failed to fetch data. Please check your internet or try again later.");
+        alert("❌ Failed to fetch data. Please check your internet or backend.");
       }
     }
   </script>
