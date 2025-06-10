@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ACPC College Cutoff Explorer</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    table, th, td {
+      border: 1px solid #ccc;
+      border-collapse: collapse;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-800 p-4">
+  <h1 class="text-2xl font-bold mb-4 text-center">ACPC College Cutoff Explorer</h1>
+
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+    <input id="year" placeholder="Year (e.g. 2025)" class="p-2 border rounded" />
+    <input id="round" placeholder="Round (e.g. Mock)" class="p-2 border rounded" />
+    <input id="category" placeholder="Category (GEN, EWS...)" class="p-2 border rounded" />
+    <input id="institute" placeholder="Institute" class="p-2 border rounded" />
+  </div>
+
+  <button onclick="fetchData()" class="bg-blue-600 text-white px-4 py-2 rounded mb-4">Search</button>
+
+  <div class="overflow-auto">
+    <table class="w-full text-sm bg-white">
+      <thead class="bg-gray-200">
+        <tr>
+          <th class="p-2">Year</th>
+          <th class="p-2">Round</th>
+          <th class="p-2">Institute</th>
+          <th class="p-2">Course</th>
+          <th class="p-2">Category</th>
+          <th class="p-2">Type</th>
+          <th class="p-2">Open Rank</th>
+          <th class="p-2">Close Rank</th>
+        </tr>
+      </thead>
+      <tbody id="results"></tbody>
+    </table>
+  </div>
+
+  <script>
+    async function fetchData() {
+      const year = document.getElementById('year').value;
+      const round = document.getElementById('round').value;
+      const category = document.getElementById('category').value;
+      const institute = document.getElementById('institute').value;
+
+      const params = new URLSearchParams({ year, round, category, institute });
+
+      // 🔁 CHANGE THIS TO YOUR Render API URL once deployed
+      const apiUrl = "https://acpc-api.onrender.com/api/colleges?" + params.toString();
+
+
+      const res = await fetch(apiUrl);
+      const data = await res.json();
+
+      const results = document.getElementById('results');
+      results.innerHTML = "";
+
+      data.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td class="p-2">${row.year}</td>
+          <td class="p-2">${row.round}</td>
+          <td class="p-2">${row.institute}</td>
+          <td class="p-2">${row.course}</td>
+          <td class="p-2">${row.category}</td>
+          <td class="p-2">${row.type}</td>
+          <td class="p-2">${row.first_rank}</td>
+          <td class="p-2">${row.last_rank}</td>
+        `;
+        results.appendChild(tr);
+      });
+    }
+  </script>
+</body>
+</html>
